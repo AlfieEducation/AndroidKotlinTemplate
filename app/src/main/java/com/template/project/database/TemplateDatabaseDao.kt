@@ -22,9 +22,9 @@ interface TemplateDatabaseDao {
     fun clear()
 
     @Query("SELECT * FROM template_table ORDER BY entityId DESC")
-    fun getAllNights(): LiveData<List<TemplateEntity>>
+    fun getAllEntities(): LiveData<List<TemplateEntity>>
 
     @Query("SELECT * FROM template_table ORDER BY entityId DESC LIMIT 1")
-    fun getTonight(): TemplateEntity?
+    fun getLastEntity(): TemplateEntity?
 
 }

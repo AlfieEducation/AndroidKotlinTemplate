@@ -2,9 +2,11 @@ package com.template.project
 
 import android.os.Bundle
 import android.view.*
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import com.template.project.databinding.FragmentMainBinding
 import timber.log.Timber
 
 class MainFragment : Fragment() {
@@ -13,9 +15,15 @@ class MainFragment : Fragment() {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
 
+        val binding: FragmentMainBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_main, container, false)
         Timber.i("OnCreateView started")
 
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        binding.playButton.setOnClickListener { view: View ->
+            view.findNavController().navigate(MainFragmentDirections.actionMainFragmentToDatabaseFragment())
+        }
+
+        return binding.root
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
