@@ -61,4 +61,17 @@ class DatabaseViewModel(
         }
     }
 
+    fun onClear() {
+        uiScope.launch {
+            clear()
+            curEntity.value = null
+        }
+    }
+
+    private suspend fun clear() {
+        withContext(Dispatchers.IO) {
+            database.clear()
+        }
+    }
+
 }
