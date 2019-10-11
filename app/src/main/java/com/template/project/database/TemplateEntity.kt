@@ -16,5 +16,5 @@ data class TemplateEntity(
     var intField: Int = -1,
 
     @ColumnInfo(name = "string_field")
-    var stringField: String = ""
+    var stringField: String = "Test"
     )

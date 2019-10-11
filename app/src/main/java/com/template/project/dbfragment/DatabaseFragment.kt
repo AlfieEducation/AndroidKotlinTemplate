@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.template.project.R
 import com.template.project.database.TemplateDatabase
 import com.template.project.databinding.FragmentDatabaseBinding
@@ -32,6 +35,37 @@ class DatabaseFragment : Fragment() {
                 this, viewModelFactory).get(DatabaseViewModel::class.java)
 
         binding.dbViewModel = dbViewModel
+
+        val manager = GridLayoutManager(activity, 3)
+        manager.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int) = when (position) {
+                0 -> 3
+                else -> 1
+            }
+
+        }
+        binding.entityList.layoutManager = manager
+
+        val adapter = DatabaseItemAdapter(DatabaseItemListener {
+                nightId -> //dbViewModel.onSleepNightClicked(nightId)
+        })
+
+        dbViewModel.entities.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.addHeaderAndSubmitList(it)
+            }
+        })
+
+        binding.entityList.adapter = adapter
+
+//        dbViewModel.navigateToSleepDataQuality.observe(this, Observer {night ->
+//            night?.let {
+//                this.findNavController().navigate(SleepTrackerFragmentDirections
+//                    .actionSleepTrackerFragmentToSleepDetailFragment(night))
+//                sleepTrackerViewModel.onSleepDataQualityNavigated()
+//            }
+//        })
+
 
         binding.setLifecycleOwner(this)
 //

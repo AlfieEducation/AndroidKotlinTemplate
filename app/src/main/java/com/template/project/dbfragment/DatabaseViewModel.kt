@@ -20,7 +20,7 @@ class DatabaseViewModel(
 
     private var curEntity = MutableLiveData<TemplateEntity?>()
 
-    private val entities = database.getAllEntities()
+    val entities = database.getAllEntities()
 
     val entityString = Transformations.map(entities) { entities ->
         formatEntities(entities, application.resources)
